@@ -43,6 +43,9 @@ directory take precedence. For example, `/assets/screenshot-1.png` would win ove
 
 == Changelog ==
 
+= 1.0.1 = 
+* Fixed an issue that was causing a warning when the Page Builder settings had not been saved yet
+
 = 1.0 =
 * Initial upload of the plugin to GitHub for testing
 

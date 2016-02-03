@@ -418,6 +418,7 @@ class Twenty_Sixty_Builder_Addons_Public {
 			'items_list'                 => __( 'Staff Positions list', 'fl-builder' ),
 			'items_list_navigation'      => __( 'Staff Positions list navigation', 'fl-builder' ),
 		);
+		
 		$args = array(
 			'labels'                     => $labels,
 			'hierarchical'               => true,
@@ -427,8 +428,8 @@ class Twenty_Sixty_Builder_Addons_Public {
 			'show_in_nav_menus'          => true,
 			'show_tagcloud'              => true,
 		);
+		
 		register_taxonomy( 'staff-position', array( 'staff' ), $args );
-	
 	}
 	
 }

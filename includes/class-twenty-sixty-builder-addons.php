@@ -7,7 +7,7 @@
  * public-facing side of the site and the admin area.
  *
  * @link       http://www.palmermarc.com/
- * @since      1.0.0
+ * @since      1.0.1
  *
  * @package    Twenty_Sixty_Builder_Addons
  * @subpackage Twenty_Sixty_Builder_Addons/includes
@@ -176,7 +176,9 @@ class Twenty_Sixty_Builder_Addons {
 		/**
 		 * Load the appropriate CPTs based on which modules are enabled
 		 */
-		$active_bb_modules = get_option( '_fl_builder_enabled_modules' );
+		#$active_bb_modules = get_option( '_fl_builder_enabled_modules' );
+		$active_bb_modules = get_option( '_fl_builder_enabled_modules', array() );
+		
 		if( in_array( 'faq-module', $active_bb_modules ) ) :
 			$this->loader->add_action( 'init', $plugin_public, 'register_faq_post_type', 0 );
 			$this->loader->add_action( 'init', $plugin_public, 'register_faq_category_taxnomoy', 0 );
