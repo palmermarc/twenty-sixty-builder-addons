@@ -6,7 +6,7 @@
  * A class definition that includes attributes and functions used across both the
  * public-facing side of the site and the admin area.
  *
- * @link       http://www.palmermarc.com/
+ * @link       http://www.2060digital.com/
  * @since      1.0.1
  *
  * @package    Twenty_Sixty_Builder_Addons
@@ -176,7 +176,6 @@ class Twenty_Sixty_Builder_Addons {
 		/**
 		 * Load the appropriate CPTs based on which modules are enabled
 		 */
-		#$active_bb_modules = get_option( '_fl_builder_enabled_modules' );
 		$active_bb_modules = get_option( '_fl_builder_enabled_modules', array() );
 		
 		if( in_array( 'faq-module', $active_bb_modules ) ) :
@@ -187,6 +186,11 @@ class Twenty_Sixty_Builder_Addons {
 		if( in_array( 'staff-module', $active_bb_modules ) ) :
 			$this->loader->add_action( 'init', $plugin_public, 'register_staff_post_type', 0 );
 			$this->loader->add_action( 'init', $plugin_public, 'register_staff_position_taxonomy', 0 );
+		endif;
+		
+		if( in_array( 'testimonial-module', $active_bb_modules ) ) :
+			$this->loader->add_action( 'init', $plugin_public, 'register_testimonial_post_type', 0 );
+			$this->loader->add_action( 'init', $plugin_public, 'register_testimonial_category_taxonomy', 0 );
 		endif;
 	}
 
@@ -229,5 +233,4 @@ class Twenty_Sixty_Builder_Addons {
 	public function get_version() {
 		return $this->version;
 	}
-
 }

@@ -3,7 +3,7 @@
 /**
  * The public-facing functionality of the plugin.
  *
- * @link       http://www.palmermarc.com/
+ * @link       http://www.2060digital.com/
  * @since      1.0.0
  *
  * @package    Twenty_Sixty_Builder_Addons
@@ -253,7 +253,10 @@ class Twenty_Sixty_Builder_Addons_Public {
 	}
 	
 	/**
-	 * Registers the faq post type whenever the faq_module has been turned on from the Beaver Builder settings 
+	 * Registers the `faq` post type. The faq post type is only initialized when 
+	 * the faq_module has been turned on from the Beaver Builder settings
+	 *
+	 * @since    1.0.0
 	 */
 	public function register_faq_post_type() {
 
@@ -300,6 +303,108 @@ class Twenty_Sixty_Builder_Addons_Public {
 	
 	}
 
+	/**
+	 * Registers the `testimonial` post type. The testimonial post type is only 
+	 * initializes when the testimonial module has been turned on from the 
+	 * Beaver Builder settings.
+	 *
+	 * @since    1.0.2
+	 */
+	public function register_testimonial_post_type() {
+		$labels = array(
+			'name'                  => _x( 'Testimonials', 'Post Type General Name', 'fl-builder' ),
+			'singular_name'         => _x( 'Testimonial', 'Post Type Singular Name', 'fl-builder' ),
+			'menu_name'             => __( 'Testimonials', 'fl-builder' ),
+			'name_admin_bar'        => __( 'Testimonials', 'fl-builder' ),
+			'parent_item_colon'     => __( 'Parent Item:', 'fl-builder' ),
+			'all_items'             => __( 'All Testimonials', 'fl-builder' ),
+			'add_new_item'          => __( 'Add New Testimonial', 'fl-builder' ),
+			'add_new'               => __( 'Add New', 'fl-builder' ),
+			'new_item'              => __( 'New Testimonial', 'fl-builder' ),
+			'edit_item'             => __( 'Edit Testimonial', 'fl-builder' ),
+			'update_item'           => __( 'Update Testimonial', 'fl-builder' ),
+			'view_item'             => __( 'View Testimonial', 'fl-builder' ),
+			'search_items'          => __( 'Search Testimonials', 'fl-builder' ),
+			'not_found'             => __( 'Not found', 'fl-builder' ),
+			'not_found_in_trash'    => __( 'Not found in Trash', 'fl-builder' ),
+			'items_list'            => __( 'Items list', 'fl-builder' ),
+			'items_list_navigation' => __( 'Items list navigation', 'fl-builder' ),
+			'filter_items_list'     => __( 'Filter items list', 'fl-builder' ),
+		);
+		
+		$args = array(
+			'label'                 => __( 'Testimonial', 'fl-builder' ),
+			'description'           => __( 'Testimonials', 'fl-builder' ),
+			'labels'                => $labels,
+			'supports'              => array( 'title', 'editor', ),
+			'hierarchical'          => false,
+			'public'                => true,
+			'show_ui'               => true,
+			'show_in_menu'          => true,
+			'menu_position'         => 5,
+			'menu_icon'             => 'dashicons-editor-help',
+			'show_in_admin_bar'     => true,
+			'show_in_nav_menus'     => false,
+			'can_export'            => true,
+			'has_archive'           => true,		
+			'exclude_from_search'   => true,
+			'publicly_queryable'    => true,
+			'capability_type'       => 'page',
+		);
+		
+		register_post_type( 'testimonial', $args );
+	}
+	
+	/**
+	 * Registers the `testimonial_category` taxonomy for testimonials. The 
+	 * testimonial_category taxonomy only initializes when the testimonial 
+	 * module has been turned on from the Beaver Builder settings.
+	 *
+	 * @since    1.0.2
+	 */
+	public function register_testimonial_category_taxonomy() {
+
+		$labels = array(
+			'name'                       => _x( 'Testimonial Categories', 'Taxonomy General Name', 'fl-builder' ),
+			'singular_name'              => _x( 'Testimonial Category', 'Taxonomy Singular Name', 'fl-builder' ),
+			'menu_name'                  => __( 'Taxonomy', 'fl-builder' ),
+			'all_items'                  => __( 'All Items', 'fl-builder' ),
+			'parent_item'                => __( 'Parent Item', 'fl-builder' ),
+			'parent_item_colon'          => __( 'Parent Item:', 'fl-builder' ),
+			'new_item_name'              => __( 'New Item Name', 'fl-builder' ),
+			'add_new_item'               => __( 'Add New Item', 'fl-builder' ),
+			'edit_item'                  => __( 'Edit Item', 'fl-builder' ),
+			'update_item'                => __( 'Update Item', 'fl-builder' ),
+			'view_item'                  => __( 'View Item', 'fl-builder' ),
+			'separate_items_with_commas' => __( 'Separate items with commas', 'fl-builder' ),
+			'add_or_remove_items'        => __( 'Add or remove items', 'fl-builder' ),
+			'choose_from_most_used'      => __( 'Choose from the most used', 'fl-builder' ),
+			'popular_items'              => __( 'Popular Items', 'fl-builder' ),
+			'search_items'               => __( 'Search Items', 'fl-builder' ),
+			'not_found'                  => __( 'Not Found', 'fl-builder' ),
+			'no_terms'                   => __( 'No items', 'fl-builder' ),
+			'items_list'                 => __( 'Items list', 'fl-builder' ),
+			'items_list_navigation'      => __( 'Items list navigation', 'fl-builder' ),
+		);
+		$args = array(
+			'labels'                     => $labels,
+			'hierarchical'               => true,
+			'public'                     => true,
+			'show_ui'                    => true,
+			'show_admin_column'          => true,
+			'show_in_nav_menus'          => true,
+			'show_tagcloud'              => true,
+		);
+		
+		register_taxonomy( 'testimonial_category', array( 'testimonial' ), $args );
+
+	}
+	
+	/**
+	 * Register the `faq-category` taxonomy that allows Frequently Asked Questions to be assocaited with a specific category 
+	 *
+	 * @since    1.0.0
+	 */
 	function register_faq_category_taxnomoy() {
 	
 		$labels = array(
@@ -342,6 +447,11 @@ class Twenty_Sixty_Builder_Addons_Public {
 		echo "<input {$is_checked} type='checkbox' name='{$name}' value='1' />";
 	}
 	
+	/**
+	 * Register the `staff` post type
+	 *
+	 * @since    1.0.0
+	 */
 	public function register_staff_post_type() {
 	
 		$labels = array(
@@ -394,6 +504,11 @@ class Twenty_Sixty_Builder_Addons_Public {
 	
 	}
 	
+	/**
+	 * Register the staff_position taxonomy 
+	 *
+	 * @since    1.0.0
+	 */
 	public function register_staff_position_taxonomy() {
 	
 		$labels = array(
@@ -432,4 +547,47 @@ class Twenty_Sixty_Builder_Addons_Public {
 		register_taxonomy( 'staff-position', array( 'staff' ), $args );
 	}
 	
+	/**
+	 * Register the Testimonial Module instead of the 2060 Digital Page Builder
+	 * 
+	 * @since 1.0.2
+	 */
+	public function register_testimonial_module() {
+		require_once 'modules/testimonial-module/testimonial-module.php';
+		
+		$terms = get_terms( 'testimonial_category', array( 'hide_empty' => false,  'fields' => 'all' ) );
+		$positions = array();
+		if( !empty( $terms ) && ! is_wp_error( $terms ) ) :
+			foreach( $terms as $term ) :
+				$positions[$term->slug] = __( $term->name, 'fl-builder' );
+			endforeach;
+		endif;
+
+		FLBuilder::register_module( 'TestimonialModule', 
+			array(
+				'general' => array(
+					'title'=> __( 'Testimonials', 'fl-builder' ),
+					'sections' => array(
+						'general' => array(
+							'title' => __( 'General Settings', 'fl-builder' ),
+							'fields' => array(
+								'staff_position' => array(
+									'type' => 'select',
+									'label' => __( 'Select a Testimonial Category to display', 'fl-builder' ),
+									'help' => 'Select any of the Testimonial Categories to display. If this field is left unselected, then all testimonials will be displayed.',
+									'default' => '',
+									'options' => $positions
+								),
+								'testimonials_to_display' => array(
+									'type' => 'text',
+									'label' => __( 'How many testimonials would you like to display?', 'fl-builder' ),
+									'default' => '10'
+								)
+							)
+						)
+					)
+				)
+			)
+		);
+	}
 }

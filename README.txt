@@ -43,6 +43,12 @@ directory take precedence. For example, `/assets/screenshot-1.png` would win ove
 
 == Changelog ==
 
+= 1.0.2 =
+* Removed all references of 'palmermarc.com' and gave credit directly to 2060digital.com
+* Added in the `testimonial` post type
+* Created a taxonomy called `testimonial_category` to filter testimonials for specific categories
+* Create the testimonial-module to display testimonials
+
 = 1.0.1 = 
 * Fixed an issue that was causing a warning when the Page Builder settings had not been saved yet
 

@@ -8,7 +8,7 @@
  * registers the activation and deactivation functions, and defines a function
  * that starts the plugin.
  *
- * @link              http://www.palmermarc.com/
+ * @link              http://www.2060digital.com/
  * @since             1.0.0
  * @package           Twenty_Sixty_Builder_Addons
  *
@@ -18,7 +18,7 @@
  * Description:       This plugin adds in custom functionality to the 2060 Digital Page Builder
  * Version:           1.0.0
  * Author:            Marc
- * Author URI:        http://www.palmermarc.com/
+ * Author URI:        http://www.2060digital.com/
  * License:           GPL-2.0+
  * License URI:       http://www.gnu.org/licenses/gpl-2.0.txt
  * Text Domain:       twenty-sixty-builder-addons
@@ -75,9 +75,8 @@ if( is_admin() ) {
  * @since    1.0.0
  */
 function run_twenty_sixty_builder_addons() {
-
 	$plugin = new Twenty_Sixty_Builder_Addons();
 	$plugin->run();
-
 }
+
 run_twenty_sixty_builder_addons();

@@ -3,7 +3,7 @@
 /**
  * Register all actions and filters for the plugin
  *
- * @link       http://www.palmermarc.com/
+ * @link       http://www.2060digital.com/
  * @since      1.0.0
  *
  * @package    Twenty_Sixty_Builder_Addons
