@@ -1,0 +1,32 @@
+.frequently-asked-questions .faq-bin .faq-answer {
+	display: none;
+}
+.frequently-asked-questions .faq-bin.opened .faq-answer {
+	display: block;
+}
+.frequently-asked-questions .faq-question {
+	cursor: pointer;
+}
+.frequently-asked-questions ol li.faq-bin {
+	list-style-type: decimal;
+}
+.frequently-asked-questions ul li.faq-bin {
+	list-style-type: disc;
+}
+.frequently-asked-questions .faq-question.opened:after{
+	content: '\f343';
+	display: block;
+	float: right;
+	font-family: dashicons;
+	height: 20px;
+	width: 20px;
+}
+.frequently-asked-questions .faq-question:after{
+	content: '\f347';
+	display: block;
+	float: right;
+	font-family: dashicons;
+	font-weight: bold;
+	height: 20px;
+	width: 20px;
+}
