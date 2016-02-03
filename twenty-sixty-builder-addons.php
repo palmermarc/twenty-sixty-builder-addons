@@ -16,8 +16,8 @@
  * Plugin Name:       2060 Digital Builder Addons
  * Plugin URI:        http://www.2060digital.com
  * Description:       This plugin adds in custom functionality to the 2060 Digital Page Builder
- * Version:           1.0.0
- * Author:            Marc
+ * Version:           1.0.2
+ * Author:            Marc Palmer
  * Author URI:        http://www.2060digital.com/
  * License:           GPL-2.0+
  * License URI:       http://www.gnu.org/licenses/gpl-2.0.txt
