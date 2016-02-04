@@ -43,6 +43,11 @@ directory take precedence. For example, `/assets/screenshot-1.png` would win ove
 
 == Changelog ==
 
+= 1.0.4 =
+* Added in the Products module
+* Fixed an issue that was causing the Testimonials Module to not load because of a namespace issue
+* Updated all of the post types and taxonomies to only register new when they did not exist
+
 = 1.0.2 =
 * Removed all references of 'palmermarc.com' and gave credit directly to 2060digital.com
 * Added in the `testimonial` post type

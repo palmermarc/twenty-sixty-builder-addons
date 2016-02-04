@@ -75,6 +75,8 @@ class Twenty_Sixty_Builder_Addons_Public {
 			self::register_faq_module();
 			self::register_staff_module();
 			self::register_homepage_header_module();
+			self::register_twenty_sixty_testimonials_module();
+			self::register_twenty_sixty_product_module();
 		} 
 	}
 	
@@ -259,6 +261,9 @@ class Twenty_Sixty_Builder_Addons_Public {
 	 * @since    1.0.0
 	 */
 	public function register_faq_post_type() {
+		
+		if( post_type_exists( 'faq' ) ) 
+			return;
 
 		$labels = array(
 			'name'                  => _x( 'Frequently Asked Questions', 'Post Type General Name', 'fl-builder' ),
@@ -311,6 +316,9 @@ class Twenty_Sixty_Builder_Addons_Public {
 	 * @since    1.0.2
 	 */
 	public function register_testimonial_post_type() {
+		if( post_type_exists( 'testimonial' ) ) 
+			return;
+		
 		$labels = array(
 			'name'                  => _x( 'Testimonials', 'Post Type General Name', 'fl-builder' ),
 			'singular_name'         => _x( 'Testimonial', 'Post Type Singular Name', 'fl-builder' ),
@@ -363,11 +371,13 @@ class Twenty_Sixty_Builder_Addons_Public {
 	 * @since    1.0.2
 	 */
 	public function register_testimonial_category_taxonomy() {
-
+		if( taxonomy_exists( 'testimonial-category' ) ) 
+			return;
+			
 		$labels = array(
 			'name'                       => _x( 'Testimonial Categories', 'Taxonomy General Name', 'fl-builder' ),
 			'singular_name'              => _x( 'Testimonial Category', 'Taxonomy Singular Name', 'fl-builder' ),
-			'menu_name'                  => __( 'Taxonomy', 'fl-builder' ),
+			'menu_name'                  => __( 'Testimonial Categories', 'fl-builder' ),
 			'all_items'                  => __( 'All Items', 'fl-builder' ),
 			'parent_item'                => __( 'Parent Item', 'fl-builder' ),
 			'parent_item_colon'          => __( 'Parent Item:', 'fl-builder' ),
@@ -406,7 +416,9 @@ class Twenty_Sixty_Builder_Addons_Public {
 	 * @since    1.0.0
 	 */
 	function register_faq_category_taxnomoy() {
-	
+		if( taxonomy_exists( 'faq-category' ) ) 
+			return;
+		
 		$labels = array(
 			'name'                       => _x( 'FAQ Categories', 'Taxonomy General Name', 'fl-builder' ),
 			'singular_name'              => _x( 'FAQ Category', 'Taxonomy Singular Name', 'fl-builder' ),
@@ -453,7 +465,9 @@ class Twenty_Sixty_Builder_Addons_Public {
 	 * @since    1.0.0
 	 */
 	public function register_staff_post_type() {
-	
+		if( post_type_exists( 'staff' ) ) 
+			return;
+		
 		$labels = array(
 			'name'                  => _x( 'Staff Members', 'Post Type General Name', 'fl-builder' ),
 			'singular_name'         => _x( 'Staff Members', 'Post Type Singular Name', 'fl-builder' ),
@@ -510,7 +524,9 @@ class Twenty_Sixty_Builder_Addons_Public {
 	 * @since    1.0.0
 	 */
 	public function register_staff_position_taxonomy() {
-	
+		if( taxonomy_exists( 'staff-position' ) ) 
+			return;
+		
 		$labels = array(
 			'name'                       => _x( 'Positions', 'Taxonomy General Name', 'fl-builder' ),
 			'singular_name'              => _x( 'Position', 'Taxonomy Singular Name', 'fl-builder' ),
@@ -552,8 +568,8 @@ class Twenty_Sixty_Builder_Addons_Public {
 	 * 
 	 * @since 1.0.2
 	 */
-	public function register_testimonial_module() {
-		require_once 'modules/testimonial-module/testimonial-module.php';
+	public function register_twenty_sixty_testimonials_module() {
+		require_once 'modules/twenty-sixty-testimonial-module/twenty-sixty-testimonial-module.php';
 		
 		$terms = get_terms( 'testimonial_category', array( 'hide_empty' => false,  'fields' => 'all' ) );
 		$positions = array();
@@ -563,7 +579,7 @@ class Twenty_Sixty_Builder_Addons_Public {
 			endforeach;
 		endif;
 
-		FLBuilder::register_module( 'TestimonialModule', 
+		FLBuilder::register_module( 'TwentySixtyTestimonialModule', 
 			array(
 				'general' => array(
 					'title'=> __( 'Testimonials', 'fl-builder' ),
@@ -590,4 +606,158 @@ class Twenty_Sixty_Builder_Addons_Public {
 			)
 		);
 	}
+
+	/**
+	 * Register the product module and configure the module for use in the Page Builder
+	 * 
+	 * @since 1.0.4
+	 */
+	 function register_twenty_sixty_product_module() {
+	 	require_once 'modules/twenty-sixty-product-module/twenty-sixty-product-module.php';
+		
+		$terms = get_terms( 'product_category', array( 'hide_empty' => false,  'fields' => 'all' ) );
+		$product_categories = array();
+		if( !empty( $terms ) && ! is_wp_error( $terms ) ) :
+			foreach( $terms as $term ) :
+				$faq_categories[$term->slug] = __( $term->name, 'fl-builder' );
+			endforeach;
+		endif;
+
+		FLBuilder::register_module( 'TwentySixtyProductModule', 
+			array(
+				'general' => array(
+					'title'=> __( 'Products', 'fl-builder' ),
+					'sections' => array(
+						'general' => array(
+							'title' => __( 'Section Title', 'fl-builder' ),
+							'fields' => array(
+								'display_title' => array(
+									'type' => 'checkbox',
+									'label' => __( 'Display FAQ Category Title?', 'fl-builder' ),
+									'default' => 0,
+								),
+								'product_category' => array(
+									'type' => 'select',
+									'label' => __( 'Select a product category', 'fl-builder' ),
+									'help' => 'Select any of the Product Categories to display. If the category is left blank, all Products will be pulled in on the same page',
+									'default' => '',
+									'options' => $product_categories
+								),
+							)
+						)
+					)
+				)
+			)
+		);
+	 }
+	 
+
+	/**
+	 * Register the `product` post type. If the post type already exists, do nothing.
+	 * 
+	 * @since 	1.0.4
+	 */
+	function register_product_post_type() {
+		
+		if( post_type_exists( 'product' ) )
+			return;
+		
+		$labels = array(
+			'name'                  => _x( 'Products', 'Post Type General Name', 'fl-builder' ),
+			'singular_name'         => _x( 'Product', 'Post Type Singular Name', 'fl-builder' ),
+			'menu_name'             => __( 'Products', 'fl-builder' ),
+			'name_admin_bar'        => __( 'Products', 'fl-builder' ),
+			'archives'              => __( 'Product Archives', 'fl-builder' ),
+			'parent_item_colon'     => __( 'Parent Product:', 'fl-builder' ),
+			'all_items'             => __( 'All Products', 'fl-builder' ),
+			'add_new_item'          => __( 'Add New Product', 'fl-builder' ),
+			'add_new'               => __( 'Add New', 'fl-builder' ),
+			'new_item'              => __( 'New Product', 'fl-builder' ),
+			'edit_item'             => __( 'Edit Product', 'fl-builder' ),
+			'update_item'           => __( 'Update Product', 'fl-builder' ),
+			'view_item'             => __( 'View Product', 'fl-builder' ),
+			'search_items'          => __( 'Search Product', 'fl-builder' ),
+			'not_found'             => __( 'Not found', 'fl-builder' ),
+			'not_found_in_trash'    => __( 'Not found in Trash', 'fl-builder' ),
+			'featured_image'        => __( 'Featured Image', 'fl-builder' ),
+			'set_featured_image'    => __( 'Set featured image', 'fl-builder' ),
+			'remove_featured_image' => __( 'Remove featured image', 'fl-builder' ),
+			'use_featured_image'    => __( 'Use as featured image', 'fl-builder' ),
+			'insert_into_item'      => __( 'Insert into product', 'fl-builder' ),
+			'uploaded_to_this_item' => __( 'Uploaded to this product', 'fl-builder' ),
+			'items_list'            => __( 'Products list', 'fl-builder' ),
+			'items_list_navigation' => __( 'Products list navigation', 'fl-builder' ),
+			'filter_items_list'     => __( 'Filter products list', 'fl-builder' ),
+		);
+		
+		$args = array(
+			'label'                 => __( 'Product', 'fl-builder' ),
+			'description'           => __( 'Products that are for sale', 'fl-builder' ),
+			'labels'                => $labels,
+			'supports'              => array( 'title', 'editor', 'excerpt', 'author', 'thumbnail', ),
+			'hierarchical'          => false,
+			'public'                => true,
+			'show_ui'               => true,
+			'show_in_menu'          => true,
+			'menu_position'         => 5,
+			'menu_icon'             => 'dashicons-cart',
+			'show_in_admin_bar'     => true,
+			'show_in_nav_menus'     => true,
+			'can_export'            => true,
+			'has_archive'           => true,		
+			'exclude_from_search'   => false,
+			'publicly_queryable'    => true,
+			'capability_type'       => 'post',
+		);
+
+		register_post_type( 'product', $args );
+	}
+
+	/**
+	 * Register the `product_type` taxonomy and associate the taxonomy with the `product` category
+	 * 
+	 * @since	1.0.4
+	 */
+	function register_product_type_taxonomy() {
+		
+		if( taxonomy_exists( 'product_type' ) )
+			return;
+		
+		$labels = array(
+			'name'                       => _x( 'Product Types', 'Taxonomy General Name', 'fl-builder' ),
+			'singular_name'              => _x( 'Product Type', 'Taxonomy Singular Name', 'fl-builder' ),
+			'menu_name'                  => __( 'Product Type', 'fl-builder' ),
+			'all_items'                  => __( 'All Product Types', 'fl-builder' ),
+			'parent_item'                => __( 'Parent Product Type', 'fl-builder' ),
+			'parent_item_colon'          => __( 'Parent Product Type:', 'fl-builder' ),
+			'new_item_name'              => __( 'New Product Type Name', 'fl-builder' ),
+			'add_new_item'               => __( 'Add New Product Type', 'fl-builder' ),
+			'edit_item'                  => __( 'Edit Product Type', 'fl-builder' ),
+			'update_item'                => __( 'Update Product Type', 'fl-builder' ),
+			'view_item'                  => __( 'View Product Type', 'fl-builder' ),
+			'separate_items_with_commas' => __( 'Separate product types with commas', 'fl-builder' ),
+			'add_or_remove_items'        => __( 'Add or Remove Product Types', 'fl-builder' ),
+			'choose_from_most_used'      => __( 'Choose from the most used', 'fl-builder' ),
+			'popular_items'              => __( 'Popular Product Types', 'fl-builder' ),
+			'search_items'               => __( 'Search Product Types', 'fl-builder' ),
+			'not_found'                  => __( 'Not Found', 'fl-builder' ),
+			'no_terms'                   => __( 'No product types', 'fl-builder' ),
+			'items_list'                 => __( 'Product Types list', 'fl-builder' ),
+			'items_list_navigation'      => __( 'Product Types list navigation', 'fl-builder' ),
+		);
+		
+		$args = array(
+			'labels'                     => $labels,
+			'hierarchical'               => true,
+			'public'                     => true,
+			'show_ui'                    => true,
+			'show_admin_column'          => true,
+			'show_in_nav_menus'          => true,
+			'show_tagcloud'              => true,
+		);
+		
+		register_taxonomy( 'product_type', array( 'product' ), $args );
+	
+	}
+	
 }

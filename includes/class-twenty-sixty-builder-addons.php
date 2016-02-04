@@ -154,7 +154,6 @@ class Twenty_Sixty_Builder_Addons {
 
 		$this->loader->add_action( 'admin_enqueue_scripts', $plugin_admin, 'enqueue_styles' );
 		$this->loader->add_action( 'admin_enqueue_scripts', $plugin_admin, 'enqueue_scripts' );
-
 	}
 
 	/**
@@ -165,7 +164,6 @@ class Twenty_Sixty_Builder_Addons {
 	 * @access   private
 	 */
 	private function define_public_hooks() {
-
 		$plugin_public = new Twenty_Sixty_Builder_Addons_Public( $this->get_plugin_name(), $this->get_version() );
 
 		$this->loader->add_action( 'wp_enqueue_scripts', $plugin_public, 'enqueue_styles' );
@@ -188,9 +186,15 @@ class Twenty_Sixty_Builder_Addons {
 			$this->loader->add_action( 'init', $plugin_public, 'register_staff_position_taxonomy', 0 );
 		endif;
 		
-		if( in_array( 'testimonials', $active_bb_modules ) ) :
+		if( in_array( 'twenty-sixty-testimonials-module', $active_bb_modules ) ) :
 			$this->loader->add_action( 'init', $plugin_public, 'register_testimonial_post_type', 0 );
 			$this->loader->add_action( 'init', $plugin_public, 'register_testimonial_category_taxonomy', 0 );
+		endif;
+		
+		// Register the `product` post type and `product_category` taxonomy if the module is active 
+		if( in_array( 'twenty-sixty-product-module', $active_bb_modules ) ) :
+			$this->loader->add_action( 'init', $plugin_public, 'register_product_post_type', 0 );
+			$this->loader->add_action( 'init', $plugin_public, 'register_product_type_taxonomy', 0 );
 		endif;
 	}
 
@@ -205,7 +209,7 @@ class Twenty_Sixty_Builder_Addons {
 
 	/**
 	 * The name of the plugin used to uniquely identify it within the context of
-	 * WordPress and to define internationalization functionality.
+	 * WordPress and to definqe internationalization functionality.
 	 *
 	 * @since     1.0.0
 	 * @return    string    The name of the plugin.
