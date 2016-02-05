@@ -186,7 +186,7 @@ class Twenty_Sixty_Builder_Addons {
 			$this->loader->add_action( 'init', $plugin_public, 'register_staff_position_taxonomy', 0 );
 		endif;
 		
-		if( in_array( 'twenty-sixty-testimonials-module', $active_bb_modules ) ) :
+		if( in_array( 'twenty-sixty-testimonial-module', $active_bb_modules ) ) :
 			$this->loader->add_action( 'init', $plugin_public, 'register_testimonial_post_type', 0 );
 			$this->loader->add_action( 'init', $plugin_public, 'register_testimonial_category_taxonomy', 0 );
 		endif;
